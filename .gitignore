@@ -1,0 +1,31 @@
+# Compiled Java files
+*.class
+target/
+
+# Eclipse / IDE files
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# VS Code files
+.vscode/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+
+# Environment files
+.env
+application-local.properties
