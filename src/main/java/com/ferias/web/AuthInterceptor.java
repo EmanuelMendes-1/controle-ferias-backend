@@ -21,6 +21,16 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        
+        String path = request.getRequestURI();
+        
+        // Ignorar login, logout e OPTIONS
+        if (path.contains("/api/auth/login") || 
+            path.contains("/api/auth/logout") ||
+            request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+        
         String authHeader = request.getHeader(AUTH_HEADER);
         if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -39,7 +49,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        UsuarioContext contexto = new UsuarioContext(usuario.getUsuarioId(), usuario.getNome(), usuario.getLogin(), usuario.getTipo());
+        UsuarioContext contexto = new UsuarioContext(
+            usuario.getUsuarioId(), 
+            usuario.getLogin(), 
+            usuario.getNome(), 
+            usuario.getTipo() != null ? usuario.getTipo() : "FUNCIONARIO"
+        );
         request.setAttribute(ATTR_USUARIO, contexto);
         return true;
     }
