@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbUsuarios", catalog = "seguranca")
+@Table(name = "tb_usuarios", schema = "seguranca")
 public class TbUsuario {
 
     @Id
@@ -12,74 +12,43 @@ public class TbUsuario {
     @Column(name = "usuario_id")
     private Integer usuarioId;
 
-    @Column(nullable = false, length = 200)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
 
-    @Column(nullable = false)
+    @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "atualizado_em", nullable = false)
+    @Column(name = "tipo", nullable = false)
+    private String tipo = "FUNCIONARIO";
+
+    @Column(name = "atualizado_em")
     private LocalDateTime atualizadoEm;
 
     @Column(name = "atualizado_por")
     private Integer atualizadoPor;
 
-    @PrePersist
-    @PreUpdate
-    void preencherAuditoria() {
-        if (atualizadoEm == null) {
-            atualizadoEm = LocalDateTime.now();
-        }
-    }
+    // Getters e Setters
+    public Integer getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
 
-    public Integer getUsuarioId() {
-        return usuarioId;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setUsuarioId(Integer usuarioId) {
-        this.usuarioId = usuarioId;
-    }
+    public String getLogin() { return login; }
+    public void setLogin(String login) { this.login = login; }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 
-    public String getLogin() {
-        return login;
-    }
+    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public LocalDateTime getAtualizadoEm() {
-        return atualizadoEm;
-    }
-
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
-        this.atualizadoEm = atualizadoEm;
-    }
-
-    public Integer getAtualizadoPor() {
-        return atualizadoPor;
-    }
-
-    public void setAtualizadoPor(Integer atualizadoPor) {
-        this.atualizadoPor = atualizadoPor;
-    }
+    public Integer getAtualizadoPor() { return atualizadoPor; }
+    public void setAtualizadoPor(Integer atualizadoPor) { this.atualizadoPor = atualizadoPor; }
 }

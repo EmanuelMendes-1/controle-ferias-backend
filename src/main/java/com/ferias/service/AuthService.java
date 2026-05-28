@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,11 +39,14 @@ public class AuthService {
         }
 
         String token = UUID.randomUUID().toString();
+        
         UsuarioContext ctx = new UsuarioContext(
-                usuario.getUsuarioId(),
-                usuario.getLogin(),
-                usuario.getNome()
+            usuario.getUsuarioId(),
+            usuario.getLogin(),
+            usuario.getNome(),
+            usuario.getTipo() != null ? usuario.getTipo() : "FUNCIONARIO"
         );
+        
         sessoes.put(token, ctx);
 
         return new LoginResponse(token, ctx.getNome(), ctx.getLogin());
